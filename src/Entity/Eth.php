@@ -16,15 +16,18 @@ class Eth
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $ethPrice = null;
+    #[ORM\Column]
+    private ?float $ethPrice = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $day = null;
 
     #[ORM\OneToMany(mappedBy: 'eth', targetEntity: Nft::class)]
-    private Collection $nfts;
+    private Collection $nft;
 
     public function __construct()
     {
-        $this->nfts = new ArrayCollection();
+        $this->nft = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -32,14 +35,26 @@ class Eth
         return $this->id;
     }
 
-    public function getEthPrice(): ?\DateTimeInterface
+    public function getEthPrice(): ?float
     {
         return $this->ethPrice;
     }
 
-    public function setEthPrice(?\DateTimeInterface $ethPrice): static
+    public function setEthPrice(float $ethPrice): static
     {
         $this->ethPrice = $ethPrice;
+
+        return $this;
+    }
+
+    public function getDay(): ?\DateTimeInterface
+    {
+        return $this->day;
+    }
+
+    public function setDay(\DateTimeInterface $day): static
+    {
+        $this->day = $day;
 
         return $this;
     }
@@ -47,15 +62,15 @@ class Eth
     /**
      * @return Collection<int, Nft>
      */
-    public function getNfts(): Collection
+    public function getNft(): Collection
     {
-        return $this->nfts;
+        return $this->nft;
     }
 
     public function addNft(Nft $nft): static
     {
-        if (!$this->nfts->contains($nft)) {
-            $this->nfts->add($nft);
+        if (!$this->nft->contains($nft)) {
+            $this->nft->add($nft);
             $nft->setEth($this);
         }
 
@@ -64,7 +79,7 @@ class Eth
 
     public function removeNft(Nft $nft): static
     {
-        if ($this->nfts->removeElement($nft)) {
+        if ($this->nft->removeElement($nft)) {
             // set the owning side to null (unless already changed)
             if ($nft->getEth() === $this) {
                 $nft->setEth(null);

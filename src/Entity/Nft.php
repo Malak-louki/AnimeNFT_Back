@@ -43,8 +43,10 @@ class Nft
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'nfts')]
     private Collection $categories;
 
-    #[ORM\ManyToOne(inversedBy: 'nfts')]
+    #[ORM\ManyToOne(inversedBy: 'nft')]
     private ?Eth $eth = null;
+
+
 
     public function __construct()
     {
@@ -187,4 +189,6 @@ class Nft
 
         return $this;
     }
+
+
 }
