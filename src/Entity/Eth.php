@@ -23,7 +23,7 @@ class Eth
     private ?\DateTimeInterface $day = null;
 
     #[ORM\OneToMany(mappedBy: 'eth', targetEntity: Nft::class)]
-    private Collection $nft;
+    private ?Collection $nft = null;
 
     public function __construct()
     {

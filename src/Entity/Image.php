@@ -22,7 +22,7 @@ class Image
     private ?string $imgURL = null;
 
     #[ORM\OneToMany(mappedBy: 'image', targetEntity: Nft::class)]
-    private Collection $nfts;
+    private ?Collection $nfts = null;
 
     public function __construct()
     {

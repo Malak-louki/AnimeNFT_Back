@@ -24,12 +24,12 @@ class EthFixtures extends Fixture implements DependentFixtureInterface
         $eths = [
             (new Eth())
                 ->setDay($newDate)
-                ->setEthPrice(1000)
-                ->setNft($nfts[1]),
+                ->setEthPrice(1000),
+                // ->addNft($nfts[1]),
             (new Eth())
                 ->setDay($newDate)
-                ->setEthPrice(2000)
-                ->setNft($nfts[1]),
+                ->setEthPrice(2000),
+                // ->addNft($nfts[2]),
         ];
 
         foreach ($eths as $eth) {

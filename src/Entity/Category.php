@@ -27,7 +27,7 @@ class Category
     private Collection $children;
 
     #[ORM\ManyToMany(targetEntity: Nft::class, mappedBy: 'categories')]
-    private Collection $nfts;
+    private ?Collection $nfts = null;
 
 
 

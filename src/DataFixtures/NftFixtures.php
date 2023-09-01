@@ -38,7 +38,7 @@ class NftFixtures extends Fixture implements DependentFixtureInterface
             ->setActualPrice(1200)
             ->setDateDrop($newDate)
             ->addCategory($category[2])
-            ->addUser($user[3]),
+            ->setUser($user[3]),
             (new Nft())
             ->setName('Luffy')
             ->setIsForSale(true)
@@ -47,7 +47,7 @@ class NftFixtures extends Fixture implements DependentFixtureInterface
             ->setActualPrice(1200)
             ->setDateDrop($newDate)
             ->addCategory($category[2])
-            ->addUser($user[4]),
+            ->setUser($user[4]),
             (new Nft())
             ->setName('Zenitsu')
             ->setIsForSale(true)
@@ -56,7 +56,7 @@ class NftFixtures extends Fixture implements DependentFixtureInterface
             ->setActualPrice(1200)
             ->setDateDrop($newDate)
             ->addCategory($category[3])
-            ->addUser($user[4]),
+            ->setUser($user[4]),
             (new Nft())
             ->setName('Gojo')
             ->setIsForSale(true)
@@ -65,7 +65,7 @@ class NftFixtures extends Fixture implements DependentFixtureInterface
             ->setActualPrice(1200)
             ->setDateDrop($newDate)
             ->addCategory($category[2])
-            ->addUser($user[0]),
+            ->setUser($user[0]),
             (new Nft())
             ->setName('Naruto')
             ->setIsForSale(true)
@@ -74,7 +74,7 @@ class NftFixtures extends Fixture implements DependentFixtureInterface
             ->setActualPrice(1200)
             ->setDateDrop($newDate)
             ->addCategory($category[2])
-            ->addUser($user[3]),
+            ->setUser($user[3]),
         ];
 
         $manager->flush();
