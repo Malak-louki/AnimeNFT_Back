@@ -109,7 +109,6 @@ class Adress
     public function removeUser(User $user): static
     {
         if ($this->users->removeElement($user)) {
-            // set the owning side to null (unless already changed)
             if ($user->getAdress() === $this) {
                 $user->setAdress(null);
             }
