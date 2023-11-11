@@ -2,19 +2,41 @@
 
 namespace App\EventSubscriber;
 
-use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTCreatedEvent;
-use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
+use App\Entity\User;
+use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
+use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityUpdatedEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-#[AsEventListener(event: "lexik_jwt_authentication.on_jwt_created", method: 'onJWTCreated')]
-final class JWTCreatedListener
+class PasswordUpdateSubscriber implements EventSubscriberInterface
 {
-    public function onJWTCreated(JWTCreatedEvent $event): void
+    public function __construct(protected UserPasswordHasherInterface $passwordHasher)
     {
-        $payload = $event->getData();
+    }
 
-        $payload['email'] = $event->getUser()->getUserIdentifier();
+    /**
+     * @return array<string, string>
+     */
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            BeforeEntityPersistedEvent::class => 'onBeforeEntityPersisted',
+            BeforeEntityUpdatedEvent::class   => 'onBeforeEntityPersisted',
+        ];
+    }
 
-        $event->setData($payload);
+    public function onBeforeEntityPersisted(BeforeEntityUpdatedEvent|BeforeEntityPersistedEvent $event): void
+    {
+        $entity = $event->getEntityInstance();
 
+        if (!$entity instanceof User) {
+            return;
+        }
+
+        if (!is_null($entity->getPlainPassword()) && '' != $entity->getPlainPassword()) {
+            $entity->setPassword(
+                $this->passwordHasher->hashPassword($entity, $entity->getPlainPassword())
+            );
+        }
     }
 }
