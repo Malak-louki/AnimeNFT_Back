@@ -27,8 +27,8 @@ class Adress
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $streetName = null;
 
-    #[ORM\OneToMany(mappedBy: 'adress', targetEntity: User::class)]
-    private Collection $users;
+    #[ORM\OneToOne(mappedBy: 'adress')]
+private ?User $user = null;
 
     public function __construct()
     {
@@ -116,4 +116,8 @@ class Adress
 
         return $this;
     }
+public function __toString(): string {
+    return $this->streetNum . ', ' . $this->code . ', ' . $this->city . ', ' . $this->streetName;
+}
+
 }

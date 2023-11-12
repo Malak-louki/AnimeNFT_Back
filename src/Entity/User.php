@@ -52,7 +52,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JWTUser
     #[ORM\Column(nullable: true)]
     private ?bool $is_a_Seller = null;
 
-    #[ORM\ManyToOne(inversedBy: 'users')]
+    #[ORM\OneToOne(inversedBy: 'user')]
     private ?Adress $adress = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Nft::class)]
@@ -240,9 +240,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JWTUser
 
         return $this;
     }
-    public function __toString():string{
-        return (string)$this->getAdress();
-    }
+// In the Adress entity
+// Dans l'entité User
+public function __toString(): string{
+    $address = $this->getAdress();
+    
+    return $address ? (string) $address : ''; 
+}
+
+
     public static function createFromPayload($username, array $payload): self
     {
         return (new self())
